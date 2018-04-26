@@ -1,5 +1,7 @@
 import axios from 'axios';
 import Util from '../Util';
+import {AUTH} from '../../../store/modules/auth/getter-types';
+import store from '../../../store';
 
 export default class GroupService {
 
@@ -9,7 +11,7 @@ export default class GroupService {
    */
   static getAllGroups() {
     const headers = {
-      Authorization: 'Basic SWdvci5NaW5pbkB0LXN5c3RlbXMuY29tOlNvbWV0aGluZzU2OCE='
+      Authorization: store.getters[AUTH]
     };
     return axios.get(Util.getApiUrl('inventory/managedObjects?pageSize=1000&type=c8y_DeviceGroup&withTotalPages=true'), {headers});
   }
