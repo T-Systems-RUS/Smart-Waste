@@ -1,5 +1,15 @@
 <template>
-  <Tree :config="config"/>
+  <Tree :config="config">
+    <template slot="header">
+      <th>Name</th>
+      <th>Serial</th>
+      <th>Event</th>
+    </template>
+    <template scope="{item}">
+      <td>{{ item.serial }}</td>
+      <td>{{ item.event }}</td>
+    </template>
+  </Tree>
 </template>
 
 <script lang="ts">
@@ -15,8 +25,8 @@
           {
             name: 'child group',
             children: [
-              {name: 'device 1'},
-              {name: 'device 123'}
+              {name: 'device 1', serial: 123, event: 'blabla'},
+              {name: 'device 123', serial: 'sdasd', event: 'ASDASD'}
             ]
           },
           {name: 'Other device'},
@@ -24,7 +34,7 @@
           {
             name: 'group',
             children: [
-              {name: 'device'},
+              {name: 'device', serial: 9999, event: 'Last event'},
               {name: 'device 3'}
             ]
           }

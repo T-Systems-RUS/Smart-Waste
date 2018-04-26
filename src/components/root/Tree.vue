@@ -1,15 +1,19 @@
 <template>
   <div class="container">
-    <table class="table">
+    <table class="table is-striped is-hoverable is-fullwidth">
       <thead>
         <tr>
-          <th>Qualification or relegation</th>
+          <slot name="header">
+            <th>Header</th>
+          </slot>
         </tr>
       </thead>
       <tbody>
         <TreeItem
           v-for="item of tableDataComputed"
-          :item="item"/>
+          :item="item">
+          <slot :item="item"/>
+        </TreeItem>
       </tbody>
     </table>
   </div>

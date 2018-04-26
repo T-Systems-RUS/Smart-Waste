@@ -14,6 +14,7 @@
         </span>
       </div>
     </td>
+    <slot/>
   </tr>
 </template>
 

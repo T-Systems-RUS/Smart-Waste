@@ -63,6 +63,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     // TODO enable later if really needed
     'vue/require-v-for-key': 'off',
+    'vue/valid-v-for': 'off',
 
     // Typescript Plugin
     'typescript/adjacent-overload-signatures': ['error'],
