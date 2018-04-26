@@ -23,7 +23,7 @@
   import Vue from 'vue';
   import TreeItem from './TreeItem.vue';
 
-  interface ITreeItem {
+  export interface ITreeItem {
     name: string;
     expanded?: boolean;
     children?: ITreeItem[];
@@ -35,12 +35,12 @@
       TreeItem
     },
     props: {
-      config: Object
+      items: Array as () => ITreeItem[]
     },
     computed: {
       tableDataComputed() {
         const tableData: ITreeItem[] = [];
-        this.getChildren(this.config.data, tableData, 0);
+        this.getChildren(this.items, tableData, 0);
         return tableData;
       }
     },
