@@ -45,8 +45,6 @@
     },
     created() {
       GroupService.getAllGroups().then(groups => {
-        console.log(this.collectionToTree(groups.data));
-
         this.items = this.collectionToTree(groups.data);
       });
     },
