@@ -19,57 +19,6 @@
   import Vue from 'vue';
   import TreeItem from './TreeItem.vue';
 
-  const data = [{
-    name: 'My Tree',
-    expanded: true,
-    children: [
-      {
-        name: 'child folder',
-        children: [
-          {
-            name: 'child folder',
-            children: [
-              {name: 'hello'},
-              {name: 'wat'}
-            ]
-          },
-          {name: 'hello'},
-          {name: 'wat'},
-          {
-            name: 'child folder',
-            children: [
-              {name: 'hello'},
-              {name: 'wat'}
-            ]
-          }
-        ]
-      },
-      {name: 'hello'},
-      {name: 'wat'},
-      {
-        name: 'child folder',
-        children: [
-          {
-            name: 'child folder',
-            children: [
-              {name: 'hello'},
-              {name: 'wat'}
-            ]
-          },
-          {name: 'hello'},
-          {name: 'wat'},
-          {
-            name: 'child folder',
-            children: [
-              {name: 'hello'},
-              {name: 'wat'}
-            ]
-          }
-        ]
-      }
-    ]
-  }];
-
   interface ITreeItem {
     name: string;
     expanded?: boolean;
@@ -77,29 +26,17 @@
     level?: number;
   }
 
-  interface ITreeData {
-    treeData: ITreeItem[];
-    tableData: ITreeItem[];
-  }
-
   export default Vue.extend({
     components: {
       TreeItem
     },
     props: {
-      field: String,
-      title: String
-    },
-    data(): ITreeData {
-      return {
-        treeData: data,
-        tableData: []
-      };
+      config: Object
     },
     computed: {
       tableDataComputed() {
         const tableData: ITreeItem[] = [];
-        this.getChildren(this.treeData, tableData, 0);
+        this.getChildren(this.config.data, tableData, 0);
         return tableData;
       }
     },
