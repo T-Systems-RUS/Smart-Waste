@@ -63,6 +63,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     // TODO enable later if really needed
     'vue/require-v-for-key': 'off',
+    'vue/valid-v-for': 'off',
 
     // Typescript Plugin
     'typescript/adjacent-overload-signatures': ['error'],
@@ -75,7 +76,8 @@ module.exports = {
     'typescript/no-explicit-any': ['error'],
     'typescript/no-namespace': ['error'],
     'typescript/no-triple-slash-reference': ['error'],
-    'typescript/type-annotation-spacing': ['error'],
+    // Broken
+    //'typescript/type-annotation-spacing': ['error'],
   },
   overrides: [
     {

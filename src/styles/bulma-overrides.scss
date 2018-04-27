@@ -2,8 +2,8 @@
 
 // Override bulma defaults
 // Remember to override derived variables from @import '~bulma/sass/utilities/derived-variables.sass';
-@import '../../node_modules/bulma/sass/utilities/initial-variables';
-@import '../../node_modules/bulma/sass/utilities/all';
+@import '~bulma/sass/utilities/initial-variables';
+@import '~bulma/sass/utilities/all';
 
 //Container
 $container-max-size: 984px;
@@ -60,17 +60,19 @@ $button-padding: $building-unit $building-unit * 2;
 $modal-z: 110;
 
 // Global bulma base styles
-@import '../../node_modules/bulma/sass/base/all';
+@import '~bulma/sass/base/all';
 
 // Other global bulma imports
-@import '../../node_modules/bulma/sass/elements/container';
-@import '../../node_modules/bulma/sass/elements/title';
-@import '../../node_modules/bulma/sass/elements/button';
-@import '../../node_modules/bulma/sass/elements/form';
-@import '../../node_modules/bulma/sass/elements/tag';
-@import '../../node_modules/bulma/sass/components/dropdown';
-@import '../../node_modules/bulma/sass/grid/columns';
-@import '../../node_modules/bulma/sass/components/modal';
+@import '~bulma/sass/elements/container';
+@import '~bulma/sass/elements/title';
+@import '~bulma/sass/elements/button';
+@import '~bulma/sass/elements/form';
+@import '~bulma/sass/elements/tag';
+@import '~bulma/sass/components/dropdown';
+@import '~bulma/sass/grid/columns';
+@import '~bulma/sass/components/modal';
+@import '~bulma/sass/elements/table';
+
 
 .columns {
   margin-top: 0;

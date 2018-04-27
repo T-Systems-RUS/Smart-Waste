@@ -1,21 +1,26 @@
 <template>
-  <div
+  <label
     class="checkbox"
     @click="toggleCheck">
-    <img
-      class="check"
-      src="./check.svg"
-      v-if="checkedValue"
-    >
-  </div>
+    <input
+      :name="name"
+      :checked="checked"
+      type="checkbox">
+    <span
+      class="checkbox-icon"
+      :class="{'is-checked': checkedValue}"/>
+    <span class="checkbox-label">
+      <slot/>
+    </span>
+  </label>
 </template>
 
 <script lang="ts">
   import Vue from 'vue';
 
   export default Vue.extend({
-    name: 'Checkbox',
     props: {
+      name: String,
       checked: Boolean
     },
     computed: {
@@ -26,6 +31,10 @@
     methods: {
       toggleCheck() {
         this.$emit('update:checked', !this.checked);
+
+        // need to update the model,
+        // see https://github.com/vuejs/vue/issues/3838
+        this.$emit('input', this.checked);
       }
     }
   });
@@ -33,31 +42,72 @@
 
 <style lang="scss" scoped>
   @import '../../styles/variables';
+  @import '../../styles/bulma-overrides';
 
-  $checkbox-size: 22px;
-  $checkbox-background-color: #ededed;
-  $checkbox-background-color-hover: #dbdbdb;
-  $checkbox-background-color-active: #c7c7c7;
-  $checkbox-border-color: #b2b2b2;
+  $checkbox-size: $building-unit * 2;
+  $checkbox-background-color: $gray-237;
+  $checkbox-border-color: $gray-178;
+  $checkbox-label-padding-left: $checkbox-size + $building-unit;
+  $checkbox-label-padding-top: $building-unit / 4;
 
-  .checkbox {
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  label.checkbox {
+    padding-left: $checkbox-label-padding-left;
+    padding-top: $checkbox-label-padding-top;
+
+    &:hover {
+      .checkbox-icon {
+        background-color: $gray-220;
+        color: $gray-56;
+      }
+    }
+
+    &:active {
+      .checkbox-icon {
+        background-color: $gray-199;
+      }
+    }
+
+    &:focus {
+      outline: 0;
+      .checkbox-icon {
+        background-color: $gray-237;
+        border-color: $blue;
+        box-shadow: $input-focus-box-shadow-size rgba($blue, .5);
+        outline: 0;
+      }
+    }
+  }
+
+  .checkbox-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: $checkbox-size;
     height: $checkbox-size;
     background-color: $checkbox-background-color;
     border-radius: $telekom-radius;
     border: 1px solid $checkbox-border-color;
-    transition: all 200ms ease;
+    transition: $transition-default;
 
-    .check {
+    &::after {
+      content: '';
+      width: $checkbox-size;
+      height: $checkbox-size;
+      background: url('./check.svg') no-repeat center center;
       position: absolute;
+      top: -1px;
+      left: -1px;
+      opacity: 0;
     }
 
-    &:hover {
-      background-color: $checkbox-background-color-hover;
-    }
-
-    &:active {
-      background-color: $checkbox-background-color-active;
+    &.is-checked {
+      &::after {
+        opacity: 1;
+      }
     }
   }
 </style>

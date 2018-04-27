@@ -19,6 +19,10 @@
             <span class="is-hidden-mobile">{{ $t('project') }}</span>
             <span class="is-hidden-tablet is-hidden-desktop">{{ $t('projectShort') }}</span>
           </div>
+          <button
+            v-if="isAuthorized"
+            @click="logout"
+            class="button is-square is-primary">{{ $t('logout') }}</button>
           <div class="control is-pulled-right">
             <div class="select">
               <select
@@ -37,7 +41,10 @@
 
 <script lang="ts">
   import Vue from 'vue';
+  import {mapGetters, mapMutations} from 'vuex';
   import {CHANGE_LANGUAGE} from '../store/modules/language/mutation-types';
+  import {LOGOUT} from '../store/modules/auth/mutation-types';
+  import {IS_AUTHORIZED} from '../store/modules/auth/getter-types';
 
   export default Vue.extend({
     computed: {
@@ -48,7 +55,15 @@
         set(value: string) {
           this.$store.commit(CHANGE_LANGUAGE, value);
         }
-      }
+      },
+      ...mapGetters({
+        isAuthorized: IS_AUTHORIZED
+      })
+    },
+    methods: {
+      ...mapMutations({
+        logout: LOGOUT
+      })
     }
   });
 </script>
