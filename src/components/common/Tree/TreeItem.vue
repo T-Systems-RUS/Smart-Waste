@@ -18,6 +18,10 @@
               class="level"
               v-if="item.level"/>
             {{ item.name }}
+            <img
+              v-if="item.loading"
+              class="loading-icon"
+              src="../../../assets/loading_outline.svg">
           </span>
         </slot>
       </div>

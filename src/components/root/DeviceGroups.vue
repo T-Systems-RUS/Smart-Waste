@@ -25,6 +25,10 @@
           class="group-icon"
           src="./assets/group.svg">
         {{ item.name }}
+        <img
+          v-if="item.loading"
+          class="loading-icon"
+          src="../../assets/loading_outline.svg">
       </span>
     </template>
     <template
@@ -62,8 +66,10 @@
     },
     methods: {
       toggled(item: IGroup) {
+        (item as ITreeItem).loading = true;
         GroupService.getGroupById(item.id).then(group => {
           Vue.set(item, 'children', group.data.references.map(asset => this.mapGroupToTreeItem(asset.managedObject)));
+          (item as ITreeItem).loading = false;
         });
       },
       // Private
