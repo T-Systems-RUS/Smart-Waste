@@ -35,25 +35,22 @@
     },
     created() {
       GroupService.getAllGroups().then(groups => {
-        this.items = this.collectionToTree(groups.data);
+        this.items = this.groupsToTree(groups.data);
       });
     },
     methods: {
-      collectionToTree(data: IGroupResponse) {
-        return data.managedObjects.map(item => {
-          (item as ITreeItem).lazy = Boolean(item.childAssets.references.length);
-          return item;
-        });
-      },
       toggled(item: IGroup) {
         GroupService.getGroupById(item.id).then(group => {
-          const children = group.data.references
-            .map(asset => {
-              (asset.managedObject as ITreeItem).lazy = Boolean(asset.managedObject.childAssets.references.length);
-              return asset.managedObject;
-            });
-          Vue.set(item, 'children', children);
+          Vue.set(item, 'children', group.data.references.map(asset => this.mapGroupToTreeItem(asset.managedObject)));
         });
+      },
+      // Private
+      groupsToTree(data: IGroupResponse) {
+        return data.managedObjects.map(item => this.mapGroupToTreeItem(item));
+      },
+      mapGroupToTreeItem(item: IGroup) {
+        (item as ITreeItem).lazy = Boolean(item.childAssets.references.length);
+        return item;
       }
     }
   });

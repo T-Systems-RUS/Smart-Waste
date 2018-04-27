@@ -29,7 +29,9 @@
     },
     methods: {
       toggled() {
-        this.$emit('toggled', this.item);
+        if (this.item.expanded) {
+          this.$emit('toggled', this.item);
+        }
       }
     }
   });
