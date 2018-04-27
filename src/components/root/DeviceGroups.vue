@@ -13,6 +13,9 @@
       <span
         class="item-name"
         :style="{left: item.level * 20 + 'px' }">
+        <span
+          class="level"
+          v-if="item.level"/>
         <img
           v-if="item.c8y_IsDevice"
           class="group-icon"
