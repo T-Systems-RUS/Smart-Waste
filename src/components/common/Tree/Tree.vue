@@ -42,6 +42,7 @@
     level?: number;
     lazy?: boolean;
     root?: boolean;
+    loading?: boolean;
   }
 
   export default Vue.extend({

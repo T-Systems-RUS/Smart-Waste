@@ -1,7 +1,7 @@
 <template>
   <tr>
     <td>
-      <div>
+      <div class="tree-item">
         <div class="expander">
           <img
             class="expand-icon"
@@ -13,8 +13,15 @@
         <slot name="item-name">
           <span
             class="item-name"
-            :style="{left: item.level * 10 + 'px' }">
+            :style="{left: item.level * 20 + 'px' }">
+            <span
+              class="level"
+              v-if="item.level"/>
             {{ item.name }}
+            <img
+              v-if="item.loading"
+              class="loading-icon"
+              src="../../../assets/loading_outline.svg">
           </span>
         </slot>
       </div>
@@ -43,23 +50,35 @@
 </script>
 
 <style lang='scss' scoped>
-  .expander {
-    .expand-icon {
-      cursor: pointer;
-      width: 16px;
-      transform: rotate(-90deg);
-      transition: all 0.3s ease-out;
+  .tree-item {
+    .expander {
+      .expand-icon {
+        cursor: pointer;
+        width: 16px;
+        transform: rotate(-90deg);
+        transition: all 0.3s ease-out;
 
-      &.open {
-        transform: rotate(0deg);
+        &.open {
+          transform: rotate(0deg);
+        }
       }
+
+      display: inline-block;
+      width: 30px;
     }
 
-    display: inline-block;
-    width: 30px;
-  }
+    .level {
+      border-bottom: 1px dotted black;
+      border-left: 1px dotted black;
+      height: 10px;
+      width: 10px;
+      position: absolute;
+      left: -14px;
+      top: 2px;
+    }
 
-  .item-name {
-    position: relative;
+    .item-name {
+      position: relative;
+    }
   }
 </style>
