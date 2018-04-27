@@ -5,7 +5,8 @@
     <input
       :name="name"
       :checked="checked"
-      type="checkbox">
+      type="checkbox"
+      @click.stop.prevent>
     <span
       class="checkbox-icon"
       :class="{'is-checked': checkedValue}"/>
@@ -31,10 +32,6 @@
     methods: {
       toggleCheck() {
         this.$emit('update:checked', !this.checked);
-
-        // need to update the model,
-        // see https://github.com/vuejs/vue/issues/3838
-        this.$emit('input', this.checked);
       }
     }
   });

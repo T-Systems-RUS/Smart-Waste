@@ -1,11 +1,13 @@
 <template>
-  <Tree :items="items">
+  <Tree
+    :items="items"
+    @toggled="toggled">
     <template slot="header">
       <th>Name</th>
       <th>Owner</th>
       <th>Id</th>
     </template>
-    <template scope="{item}">
+    <template slot-scope="{item}">
       <td>{{ item.owner }}</td>
       <td>{{ item.id }}</td>
     </template>
@@ -16,19 +18,7 @@
   import Vue from 'vue';
   import Tree, {ITreeItem} from './Tree.vue';
   import GroupService from '../../common/classes/service/GroupService';
-
-  interface IGroupResponse {
-    managedObjects: {
-      name: string;
-      childAssets: {
-        references: {
-          managedObject: {
-            name: string;
-          }
-        }[]
-      }
-    }[]
-  }
+  import {IGroup, IGroupResponse} from '../../common/interfaces/IGroup';
 
   interface IDeviceGroupData {
     items: ITreeItem[];
@@ -38,7 +28,7 @@
     components: {
       Tree
     },
-    data():IDeviceGroupData {
+    data(): IDeviceGroupData {
       return {
         items: []
       };
@@ -51,8 +41,18 @@
     methods: {
       collectionToTree(data: IGroupResponse) {
         return data.managedObjects.map(item => {
-          (item as ITreeItem).children = item.childAssets.references.map(asset => ({name: asset.managedObject.name}));
+          (item as ITreeItem).lazy = Boolean(item.childAssets.references.length);
           return item;
+        });
+      },
+      toggled(item: IGroup) {
+        GroupService.getGroupById(item.id).then(group => {
+          const children = group.data.references
+            .map(asset => {
+              (asset.managedObject as ITreeItem).lazy = Boolean(asset.managedObject.childAssets.references.length);
+              return asset.managedObject;
+            });
+          Vue.set(item, 'children', children);
         });
       }
     }

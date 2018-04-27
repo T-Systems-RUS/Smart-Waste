@@ -4,8 +4,9 @@
       <div>
         <div class="expander">
           <Checkbox
-            v-if="item.children && item.children.length"
-            :checked.sync="item.expanded"/>
+            v-if="(item.children && item.children.length) || item.lazy"
+            :checked.sync="item.expanded"
+            @update:checked="toggled"/>
         </div>
         <span
           class="item-name"
@@ -25,6 +26,11 @@
     name: 'TreeItem',
     props: {
       item: Object
+    },
+    methods: {
+      toggled() {
+        this.$emit('toggled', this.item);
+      }
     }
   });
 </script>

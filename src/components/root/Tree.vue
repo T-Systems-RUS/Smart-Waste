@@ -10,8 +10,10 @@
       </thead>
       <tbody>
         <TreeItem
-          v-for="item of tableDataComputed"
-          :item="item">
+          v-for="(item, index) of tableDataComputed"
+          :item="item"
+          :key="index"
+          @toggled="toggled(item)">
           <slot :item="item"/>
         </TreeItem>
       </tbody>
@@ -28,6 +30,7 @@
     expanded?: boolean;
     children?: ITreeItem[];
     level?: number;
+    lazy?: boolean;
   }
 
   export default Vue.extend({
@@ -54,6 +57,9 @@
             this.getChildren(item.children, table, index);
           }
         });
+      },
+      toggled(item: ITreeItem) {
+        this.$emit('toggled', item);
       }
     }
   });
