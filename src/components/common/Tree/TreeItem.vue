@@ -3,10 +3,12 @@
     <td>
       <div>
         <div class="expander">
-          <Checkbox
+          <img
+            class="expand-icon"
+            :class="{'open': item.expanded}"
             v-if="(item.children && item.children.length) || item.lazy"
-            :checked.sync="item.expanded"
-            @update:checked="toggled"/>
+            @click="toggled"
+            src="./expand_outline.svg">
         </div>
         <slot name="item-name">
           <span
@@ -31,6 +33,7 @@
     },
     methods: {
       toggled() {
+        Vue.set(this.item, 'expanded', !this.item.expanded);
         if (this.item.expanded) {
           this.$emit('toggled', this.item);
         }
@@ -41,8 +44,15 @@
 
 <style lang='scss' scoped>
   .expander {
-    .checkbox {
-      top: -14px;
+    .expand-icon {
+      cursor: pointer;
+      width: 16px;
+      transform: rotate(-90deg);
+      transition: all 0.3s ease-out;
+
+      &.open {
+        transform: rotate(0deg);
+      }
     }
 
     display: inline-block;
