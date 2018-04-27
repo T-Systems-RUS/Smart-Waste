@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <defs>
+    <style>
+      .a {
+        fill: none;
+      }
+    </style>
+  </defs>
+  <title>folder_outline</title>
+  <rect class="a" width="64" height="64"/>
+  <path d="M58,16H29L22,9H6a2,2,0,0,0-2,2V53a2,2,0,0,0,2,2H58a2,2,0,0,0,2-2V18A2,2,0,0,0,58,16ZM7,12H20.76l5,5H7ZM57,52H7V19H57Z"/>
+</svg>

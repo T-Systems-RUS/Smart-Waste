@@ -14,7 +14,17 @@
           :item="item"
           :key="index"
           @toggled="toggled(item)">
-          <slot :item="item"/>
+
+          <template slot="item-name">
+            <slot
+              name="item-name"
+              :item="item"/>
+          </template>
+          <template slot="item-columns">
+            <slot
+              name="item-columns"
+              :item="item"/>
+          </template>
         </TreeItem>
       </tbody>
     </table>

@@ -38,8 +38,8 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../styles/variables';
-  @import '../../styles/bulma-overrides';
+  @import '../../../styles/variables';
+  @import '../../../styles/bulma-overrides';
 
   $checkbox-size: $building-unit * 2;
   $checkbox-background-color: $gray-237;
@@ -94,7 +94,7 @@
       content: '';
       width: $checkbox-size;
       height: $checkbox-size;
-      background: url('./check.svg') no-repeat center center;
+      background: url('check.svg') no-repeat center center;
       position: absolute;
       top: -1px;
       left: -1px;

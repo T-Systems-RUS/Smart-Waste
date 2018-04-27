@@ -7,7 +7,26 @@
       <th>Owner</th>
       <th>Id</th>
     </template>
-    <template slot-scope="{item}">
+    <template
+      slot="item-name"
+      slot-scope="{item}">
+      <span
+        class="item-name"
+        :style="{left: item.level * 10 + 'px' }">
+        <img
+          v-if="item.c8y_IsDevice"
+          class="group-icon"
+          src="./assets/device.svg">
+        <img
+          v-else
+          class="group-icon"
+          src="./assets/group.svg">
+        {{ item.name }}
+      </span>
+    </template>
+    <template
+      slot="item-columns"
+      slot-scope="{item}">
       <td>{{ item.owner }}</td>
       <td>{{ item.id }}</td>
     </template>
@@ -16,7 +35,7 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import Tree, {ITreeItem} from './Tree.vue';
+  import Tree, {ITreeItem} from '../common/Tree/Tree.vue';
   import GroupService from '../../common/classes/service/GroupService';
   import {IGroup, IGroupResponse} from '../../common/interfaces/IGroup';
 
@@ -55,3 +74,13 @@
     }
   });
 </script>
+
+<style lang="scss" scoped>
+  .group-icon {
+    width: 16px;
+    height: 16px;
+    position: relative;
+    top: 2px;
+  }
+</style>
+

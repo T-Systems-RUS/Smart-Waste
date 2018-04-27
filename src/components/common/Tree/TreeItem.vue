@@ -8,14 +8,16 @@
             :checked.sync="item.expanded"
             @update:checked="toggled"/>
         </div>
-        <span
-          class="item-name"
-          :style="{left: item.level * 10 + 'px' }">
-          {{ item.name }}
-        </span>
+        <slot name="item-name">
+          <span
+            class="item-name"
+            :style="{left: item.level * 10 + 'px' }">
+            {{ item.name }}
+          </span>
+        </slot>
       </div>
     </td>
-    <slot/>
+    <slot name="item-columns"/>
   </tr>
 </template>
 
