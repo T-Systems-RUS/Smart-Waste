@@ -12,7 +12,7 @@
       slot-scope="{item}">
       <span
         class="item-name"
-        :style="{left: item.level * 10 + 'px' }">
+        :style="{left: item.level * 20 + 'px' }">
         <img
           v-if="item.c8y_IsDevice"
           class="group-icon"

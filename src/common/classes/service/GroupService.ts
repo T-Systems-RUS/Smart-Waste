@@ -16,7 +16,8 @@ export default class GroupService {
   }
 
   static getGroupById(id: string) {
-    return axios.get<IGroupChildrenResponse>(Util.getApiUrl(`inventory/managedObjects/${id}/childAssets`),
+    return axios.get<IGroupChildrenResponse>(
+      Util.getApiUrl(`inventory/managedObjects/${id}/childAssets?pageSize=100&currentPage=1`),
       {headers: this.getHeaders()});
   }
 
