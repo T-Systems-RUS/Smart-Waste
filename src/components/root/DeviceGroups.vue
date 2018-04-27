@@ -1,11 +1,32 @@
 <template>
-  <Tree :items="items">
+  <Tree
+    :items="items"
+    @toggled="toggled">
     <template slot="header">
       <th>Name</th>
       <th>Owner</th>
       <th>Id</th>
     </template>
-    <template scope="{item}">
+    <template
+      slot="item-name"
+      slot-scope="{item}">
+      <span
+        class="item-name"
+        :style="{left: item.level * 20 + 'px' }">
+        <img
+          v-if="item.c8y_IsDevice"
+          class="group-icon"
+          src="./assets/device.svg">
+        <img
+          v-else
+          class="group-icon"
+          src="./assets/group.svg">
+        {{ item.name }}
+      </span>
+    </template>
+    <template
+      slot="item-columns"
+      slot-scope="{item}">
       <td>{{ item.owner }}</td>
       <td>{{ item.id }}</td>
     </template>
@@ -14,21 +35,9 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import Tree, {ITreeItem} from './Tree.vue';
+  import Tree, {ITreeItem} from '../common/Tree/Tree.vue';
   import GroupService from '../../common/classes/service/GroupService';
-
-  interface IGroupResponse {
-    managedObjects: {
-      name: string;
-      childAssets: {
-        references: {
-          managedObject: {
-            name: string;
-          }
-        }[]
-      }
-    }[]
-  }
+  import {IGroup, IGroupResponse} from '../../common/interfaces/IGroup';
 
   interface IDeviceGroupData {
     items: ITreeItem[];
@@ -38,23 +47,40 @@
     components: {
       Tree
     },
-    data():IDeviceGroupData {
+    data(): IDeviceGroupData {
       return {
         items: []
       };
     },
     created() {
       GroupService.getAllGroups().then(groups => {
-        this.items = this.collectionToTree(groups.data);
+        this.items = this.groupsToTree(groups.data);
       });
     },
     methods: {
-      collectionToTree(data: IGroupResponse) {
-        return data.managedObjects.map(item => {
-          (item as ITreeItem).children = item.childAssets.references.map(asset => ({name: asset.managedObject.name}));
-          return item;
+      toggled(item: IGroup) {
+        GroupService.getGroupById(item.id).then(group => {
+          Vue.set(item, 'children', group.data.references.map(asset => this.mapGroupToTreeItem(asset.managedObject)));
         });
+      },
+      // Private
+      groupsToTree(data: IGroupResponse) {
+        return data.managedObjects.map(item => this.mapGroupToTreeItem(item));
+      },
+      mapGroupToTreeItem(item: IGroup) {
+        (item as ITreeItem).lazy = Boolean(item.childAssets.references.length);
+        return item;
       }
     }
   });
 </script>
+
+<style lang="scss" scoped>
+  .group-icon {
+    width: 16px;
+    height: 16px;
+    position: relative;
+    top: 2px;
+  }
+</style>
+

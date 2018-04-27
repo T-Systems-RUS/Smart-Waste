@@ -10,9 +10,21 @@
       </thead>
       <tbody>
         <TreeItem
-          v-for="item of tableDataComputed"
-          :item="item">
-          <slot :item="item"/>
+          v-for="(item, index) of tableDataComputed"
+          :item="item"
+          :key="index"
+          @toggled="toggled(item)">
+
+          <template slot="item-name">
+            <slot
+              name="item-name"
+              :item="item"/>
+          </template>
+          <template slot="item-columns">
+            <slot
+              name="item-columns"
+              :item="item"/>
+          </template>
         </TreeItem>
       </tbody>
     </table>
@@ -28,6 +40,8 @@
     expanded?: boolean;
     children?: ITreeItem[];
     level?: number;
+    lazy?: boolean;
+    root?: boolean;
   }
 
   export default Vue.extend({
@@ -40,6 +54,7 @@
     computed: {
       tableDataComputed() {
         const tableData: ITreeItem[] = [];
+        this.items.forEach(item => { item.root = true; });
         this.getChildren(this.items, tableData, 0);
         return tableData;
       }
@@ -47,6 +62,9 @@
     methods: {
       getChildren(items: ITreeItem[], table: ITreeItem[], index: number) {
         items.forEach(item => {
+          if (item.root) {
+            index = 0;
+          }
           item.level = index;
           table.push(item);
           if (item.expanded && item.children && item.children.length) {
@@ -54,12 +72,10 @@
             this.getChildren(item.children, table, index);
           }
         });
+      },
+      toggled(item: ITreeItem) {
+        this.$emit('toggled', item);
       }
     }
   });
 </script>
-
-<style lang='scss' scoped>
-
-
-</style>

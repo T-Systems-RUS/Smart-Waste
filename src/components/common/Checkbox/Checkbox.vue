@@ -5,7 +5,8 @@
     <input
       :name="name"
       :checked="checked"
-      type="checkbox">
+      type="checkbox"
+      @click.stop.prevent>
     <span
       class="checkbox-icon"
       :class="{'is-checked': checkedValue}"/>
@@ -31,18 +32,14 @@
     methods: {
       toggleCheck() {
         this.$emit('update:checked', !this.checked);
-
-        // need to update the model,
-        // see https://github.com/vuejs/vue/issues/3838
-        this.$emit('input', this.checked);
       }
     }
   });
 </script>
 
 <style lang="scss" scoped>
-  @import '../../styles/variables';
-  @import '../../styles/bulma-overrides';
+  @import '../../../styles/variables';
+  @import '../../../styles/bulma-overrides';
 
   $checkbox-size: $building-unit * 2;
   $checkbox-background-color: $gray-237;
@@ -97,7 +94,7 @@
       content: '';
       width: $checkbox-size;
       height: $checkbox-size;
-      background: url('./check.svg') no-repeat center center;
+      background: url('check.svg') no-repeat center center;
       position: absolute;
       top: -1px;
       left: -1px;
