@@ -5,7 +5,7 @@
     <div class="dropdown-trigger">
       <button
         class="button is-small action-toggle"
-        @click="toggleDropdown(item)">
+        @click="toggleDropdown">
         <slot name="toggle">
           Open
         </slot>

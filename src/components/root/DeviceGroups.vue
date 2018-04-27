@@ -6,7 +6,7 @@
       <th>Name</th>
       <th>Owner</th>
       <th>Id</th>
-      <th></th>
+      <th/>
     </template>
     <template
       slot="item-name"
@@ -38,7 +38,7 @@
       <td>{{ item.owner }}</td>
       <td>{{ item.id }}</td>
       <td>
-        <Dropdown>
+        <Dropdown v-if="!item.c8y_IsDevice">
           <span
             slot="toggle"
             class="icon is-small">
