@@ -6,6 +6,7 @@
       <th>Name</th>
       <th>Owner</th>
       <th>Id</th>
+      <th></th>
     </template>
     <template
       slot="item-name"
@@ -36,6 +37,25 @@
       slot-scope="{item}">
       <td>{{ item.owner }}</td>
       <td>{{ item.id }}</td>
+      <td>
+        <Dropdown>
+          <span
+            slot="toggle"
+            class="icon is-small">
+            <img
+              class="more-icon"
+              src="./assets/more.svg">
+          </span>
+          <template slot="items">
+            <a class="dropdown-item">
+              Add child group
+            </a>
+            <a class="dropdown-item">
+              Delete group
+            </a>
+          </template>
+        </Dropdown>
+      </td>
     </template>
   </Tree>
 </template>
@@ -43,6 +63,7 @@
 <script lang="ts">
   import Vue from 'vue';
   import Tree, {ITreeItem} from '../common/Tree/Tree.vue';
+  import Dropdown from '../common/Dropdown/Dropdown.vue';
   import GroupService from '../../common/classes/service/GroupService';
   import {IGroup, IGroupResponse} from '../../common/interfaces/IGroup';
 
@@ -52,7 +73,8 @@
 
   export default Vue.extend({
     components: {
-      Tree
+      Tree,
+      Dropdown
     },
     data(): IDeviceGroupData {
       return {
@@ -90,6 +112,13 @@
     height: 16px;
     position: relative;
     top: 2px;
+  }
+
+  .more-icon {
+    position: relative;
+    top: -8px;
+    width: 16px;
+    transform: rotate(90deg);
   }
 </style>
 
